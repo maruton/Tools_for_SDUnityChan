@@ -9,9 +9,7 @@
  *				コメント欄などでは自動設定対象アバターモデルを Blender版 と表記している場合があります。 
  *				
  *				[Setup_Yuremono_for_SDUnityChan.cs]
- *
  *				Copyright (c) [2015] [Maruton]
- *
  *				This software is released under the MIT License.
  *				http://opensource.org/licenses/mit-license.php
  */
