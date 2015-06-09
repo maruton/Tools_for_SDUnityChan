@@ -36,11 +36,11 @@ namespace UnityChan{
     	 */
 		bool Checker_with_ErrorMessage(int n, string s){
 			if(n==0){// Not found
-				Debug.Log ("[ERR] Not found '"+s+"'.");
+				Debug.Log (MyScriptName+" ERROR: Not found '"+s+"'.");
 				return(true);
 			}
 			else if(n>1){//multiple found
-				Debug.Log ("[ERR] Multiple found '"+s+"'.");
+				Debug.Log (MyScriptName+" ERROR: Multiple found '"+s+"'.");
 				return(true);
 			}
 			return(false);
@@ -60,14 +60,14 @@ namespace UnityChan{
 		bool initial(){
 			if(go_Source==null){
 				if ((go_Source = GameObject.Find(Source_Name))==null){
-					Debug.Log("[NOT FOUND] Please set source avatar.");
+					Debug.Log(MyScriptName+" ERROR: Please set source avatar.");
 					return(true);
 				}
 			}
 			
 			if(go_Target==null){
 				if((go_Target = GameObject.Find(Target_Name))==null){
-					Debug.Log("[NOT FOUND] Please Set target avatar.");
+					Debug.Log(MyScriptName+" ERROR: Please Set target avatar.");
 					return(true);
 				}
 			}
@@ -106,7 +106,7 @@ namespace UnityChan{
 			IdleChanger cs_src;
 			
 			if((cs_src = go_Source.GetComponent<IdleChanger>())==null){
-				Debug.Log("[NOT FOUND] Not found script 'IdleChanger' in "+go_Source.name);
+				Debug.Log(MyScriptName+" ERROR: Not found script 'IdleChanger' in "+go_Source.name);
 				return(true);
 			}
 			if((cs_dst = go_Target.GetComponent<IdleChanger>())==null){
@@ -132,7 +132,7 @@ namespace UnityChan{
 			FaceUpdate cs_dst;
 
 			if((cs_src = go_Source.GetComponent<FaceUpdate>())==null){
-				Debug.Log("[NOT FOUND] Not found script 'FaceUpdate' in "+go_Source.name);
+				Debug.Log(MyScriptName+" ERROR: Not found script 'FaceUpdate' in "+go_Source.name);
 				return(true);
 			}
 			if((cs_dst = go_Target.GetComponent<FaceUpdate>())==null){
@@ -164,7 +164,7 @@ namespace UnityChan{
 			AutoBlinkforSD cs_src;
 			
 			if((cs_src = go_Source.GetComponent<AutoBlinkforSD>())==null){
-				Debug.Log("[NOT FOUND] Not found script 'AutoBlinkforSD' in "+go_Source.name);
+				Debug.Log(MyScriptName+" ERROR: Not found script 'AutoBlinkforSD' in "+go_Source.name);
 				return(true);
 			}
 			if((cs_dst = go_Target.GetComponent<AutoBlinkforSD>())==null){
@@ -179,7 +179,7 @@ namespace UnityChan{
 
 			int retCode;
 			SkinnedMeshRenderer q = go_Target.FindComponent_of_ChildHierarchy<SkinnedMeshRenderer>(refName, out retCode);
-			if( Checker_with_ErrorMessage( retCode, refName) ) return(true);
+			if( Checker_with_ErrorMessage( retCode, refName+"(SkinnedMeshRenderer)" ) ) return(true);
 			cs_dst.ref_face = q;
 
 			cs_dst.index_EYE_blk = cs_src.index_EYE_blk;
@@ -206,7 +206,7 @@ namespace UnityChan{
 			RandomWind cs_src;
 			
 			if((cs_src = go_Source.GetComponent<RandomWind>())==null){
-				Debug.Log("[NOT FOUND] Not found script 'RandomWind' in "+go_Source.name);
+				Debug.Log(MyScriptName+" ERROR: Not found script 'RandomWind' in "+go_Source.name);
 				return(true);
 			}
 			if((cs_dst = go_Target.GetComponent<RandomWind>())==null){
@@ -228,7 +228,7 @@ namespace UnityChan{
     	 * 	@attention
 		 */
 		void Start () {
-			Debug.Log (MyScriptName+" START");
+			Debug.Log (MyScriptName+" START:");
 			bool Result;
 			if( initial() ) return;
 			if( Setup_Animator() ) return;
@@ -236,7 +236,7 @@ namespace UnityChan{
 			if( Setup_FaceUpdate() ) return;
 			if( Setup_AutoBlinkforSD() ) return;
 			if( Setup_RandomWind() ) return;
-			Debug.Log (MyScriptName+" COMPLETE");
+			Debug.Log (MyScriptName+" COMPLETE:");
 		}
 	}
 }

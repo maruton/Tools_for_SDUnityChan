@@ -21,6 +21,7 @@ using System;//!< for Array.Resize
 
 namespace UnityChan{
 	public class Setup_Yuremono_for_SDUnityChan : MonoBehaviour {
+		string MyScriptName = "[Setup_Yuremono_for_SDUnityChan]";//!< Use report to debug message.
 
 		public GameObject go_Original, go_Target;
 		Vector2 go_Target_Position; //!< 元のGlobal Positionを格納 
@@ -51,11 +52,11 @@ namespace UnityChan{
     	 */
 		bool Checker_with_ErrorMessage(int n, string s){
 			if(n==0){// Not found
-				Debug.Log ("[ERR] Not found '"+s+"'.");
+				Debug.Log (MyScriptName+" ERROR: Not found '"+s+"'.");
 				return(true);
 			}
 			else if(n>1){//multiple found
-				Debug.Log ("[ERR] Multiple found '"+s+"'.");
+				Debug.Log (MyScriptName+" ERROR: Multiple found '"+s+"'.");
 				return(true);
 			}
 			return(false);
@@ -124,11 +125,11 @@ namespace UnityChan{
 
 			if(go_Original==null){
 				go_Original = GameObject.Find(Original_DefautName);
-				if(go_Original==null){ Debug.Log ("[NOT FOUND] "+Original_DefautName); return(true); }
+				if(go_Original==null){ Debug.Log (MyScriptName+" ERROR: Not found '"+Original_DefautName+"'"); return(true); }
 			}
 			if(go_Target==null){
 				go_Target = GameObject.Find(Target_DefaultName);
-				if(go_Target==null){ Debug.Log ("[NOT FOUND] "+Target_DefaultName); return(true); }
+				if(go_Target==null){ Debug.Log (MyScriptName+" ERROR: Not found '"+Target_DefaultName+"'"); return(true); }
 			}
 			tr_Original = go_Original.GetComponentsInChildrenWithoutSelf<Transform>();
 			tr_Target = go_Target.GetComponentsInChildrenWithoutSelf<Transform>();
@@ -156,7 +157,7 @@ namespace UnityChan{
 					tr_Diff.Add(tr_Original[i]);
 				}
 				else if(q.Count()>1){//multiple found
-					Debug.Log ("[ERR] Multiple found '"+tr_Original[i].name +"'.");
+					Debug.Log (MyScriptName+" ERROR: Multiple found '"+tr_Original[i].name +"'.");
 					return(true);
 				}
 			}
@@ -190,7 +191,7 @@ namespace UnityChan{
 						}
 					}
 					else if(q.Count()>1){//multiple found
-						Debug.Log ("[ERR] Multiple found '"+originalParentName +"'.");
+						Debug.Log (MyScriptName+" ERROR: Multiple found '"+originalParentName +"'.");
 						return(true);
 					}
 					else{//Found
@@ -284,7 +285,7 @@ namespace UnityChan{
 					if( Checker_with_ErrorMessage( q2.Count(), elemtntName) ) return(true);//check to fail
 					SpringCollider cs_element_SpringCollider = (q2.ToArray())[0].GetComponent<SpringCollider>();//get target collider that element
 					if(cs_element_SpringCollider==null){
-						Debug.Log("[ERR] not found SpringCollider in '"+(q2.ToArray())[0]+"'");
+						Debug.Log(MyScriptName+" ERROR: Not found SpringCollider in '"+(q2.ToArray())[0]+"'");
 						return(true);
 					}
 					Array.Resize(ref (cs_target_SpringBone.colliders), cs_target_SpringBone.colliders.Length+1);//Resize array(must be step by step so increase)
@@ -333,7 +334,7 @@ namespace UnityChan{
 				if( Checker_with_ErrorMessage( q.Count(), elemtntName) ) return(true);
 				SpringBone cs_element_SpringBone = (q.ToArray())[0].GetComponent<SpringBone>();
 				if(cs_element_SpringBone==null){
-					Debug.Log("[ERR] not found SpringCollider in '"+(q.ToArray())[0]+"'");
+					Debug.Log(MyScriptName+" ERROR: Not found SpringCollider in '"+(q.ToArray())[0]+"'");
 					return(true);
 				}
 				Array.Resize(ref (cs_target_SpringManager.springBones), cs_target_SpringManager.springBones.Length+1);//Resize array
@@ -361,7 +362,7 @@ namespace UnityChan{
     	 * 	@attention	
     	 */
 		void Start () {
-			Debug.Log ("[START]");
+			Debug.Log (MyScriptName+" START:");
 			Make_dic_for_BoneAxis();// Make BoneAxis data.
 			if( Stage_Initial() ) return;
 			if( Stage_Make_DiffrentObjectList() ) return;
@@ -370,7 +371,7 @@ namespace UnityChan{
 			if( Stage_Add_SpringBone() ) return;
 			if( Stage_Add_SpringManager() ) return;
 			Stage_PostInitial();
-			Debug.Log ("[END]");
+			Debug.Log (MyScriptName+" COMPLETE:");
 		}
 
 
