@@ -20,16 +20,7 @@ using System.Collections;
 using System.Linq; // for LINQ/Lambda
 using System;//!< for Array.Resize
 
-/*!	SD UnityChan用ネームスペース   
- * 	@attention 	None
- * 	@note		None
- */
 namespace UnityChan{
-	/*!	自前でFBXインポートしたSDユニティちゃんモデルに指定の公式配布モデルと同じように
-	 * 	アニメーション関連のスクリプト、アニメーションコントローラを設定する。 
-	 * 	@attention 	None
-	 * 	@note		None
-	 */
 	public class Setup_Animations_for_SDUnityChan : MonoBehaviour {
 		string MyScriptName = "[Setup_Animations_for_SDUnityChan]";//!< Use report to debug message.
 		string Source_Name = "SD_unitychan_humanoid";	//!< Default source avatar model name.
@@ -39,11 +30,9 @@ namespace UnityChan{
 
 		/*!	エラー判定及びエラーメッセージ表示を行う 
 		 *	エラー判定及びエラーメッセージ表示を行う  
-		 * 	@param [in]			n		検査コード 
-		 * 	@param [in]			s		エラー時表示用文字列 
-		 *	@return				true: エラーあり  false:エラーなし
-    	 * 	@note		 		None
-    	 * 	@attention			None
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		 
+    	 * 	@attention
     	 */
 		bool Checker_with_ErrorMessage(int n, string s){
 			if(n==0){// Not found

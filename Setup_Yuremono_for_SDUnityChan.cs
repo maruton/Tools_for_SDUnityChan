@@ -19,21 +19,11 @@ using System.Linq; // for LINQ/Lambda
 using System.Collections.Generic;//!< for List
 using System;//!< for Array.Resize
 
-/*!	SD UnityChan用ネームスペース   
- * 	@attention 	None
- * 	@note		None
- */
 namespace UnityChan{
-	/*!	SDUnityChanモデルに自動でユレモノ設定  
-	 * 	Blender等の3DCGツール経由でUnityにインポートしたSDUnityChanモデルに自動でユレモノ設定する 
-	 * 	@attention 	None
-	 * 	@note		None
-	 */
 	public class Setup_Yuremono_for_SDUnityChan : MonoBehaviour {
 		string MyScriptName = "[Setup_Yuremono_for_SDUnityChan]";//!< Use report to debug message.
 
-		public GameObject go_Original; 	//!< ユレモノ設定済みの公式配布原本のモデル(Gameobject)を設定する（雛形） 
-		public GameObject go_Target;	//!< ユレモノを新たに設定するモデル(Gameobject)を設定する。 
+		public GameObject go_Original, go_Target;
 		Vector2 go_Target_Position; //!< 元のGlobal Positionを格納 
 		
 		public int Cnt_Original;//!< Original内Object総数 
@@ -56,11 +46,9 @@ namespace UnityChan{
 
 		/*!	エラー判定及びエラーメッセージ表示を行う 
 		 *	エラー判定及びエラーメッセージ表示を行う  
-		 * 	@param [in]			n		検査コード 
-		 * 	@param [in]			s		エラー時表示用文字列 
-		 *	@return				true: エラーあり  false:エラーなし
-    	 * 	@note				None 
-    	 * 	@attention			None
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		 
+    	 * 	@attention
     	 */
 		bool Checker_with_ErrorMessage(int n, string s){
 			if(n==0){// Not found
@@ -158,9 +146,9 @@ namespace UnityChan{
 
 		/*!	OriginalとTargetのObject差異一覧生成 
 		 *	Originalに存在しTargetに存在しないGameObject.Transformの一覧を作成し保存する。  
-		 *	@return			true: エラーあり  false:エラーなし
-    	 * 	@note			差異保存先 tr_Diff
-    	 * 	@attention		None
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		差異保存先 tr_Diff
+    	 * 	@attention	
     	 */
 		bool Stage_Make_DiffrentObjectList(){
 			for(int i=0; i<tr_Original.Length; i++){
@@ -181,10 +169,10 @@ namespace UnityChan{
 
 		/*!	Target不足分の差異ObjectをTargetに追加する 
 		 *	Target不足分の差異ObjectをTargetに追加する 
-		 *	@return			true: エラーあり  false:エラーなし
-    	 * 	@note			追加するObjectの親もまた追加が必要なケースがある。 
-    	 * 					この際は先に親を追加しないと子の追加ができない為その処理も行っている。 
-    	 * 	@attention		スクリプト類は相互にPublic変数でGameObjectを参照している為、ここではまだ追加不可。 
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		追加するObjectの親もまた追加が必要なケースがある。 
+    	 * 				この際は先に親を追加しないと子の追加ができない為その処理も行っている。 
+    	 * 	@attention	スクリプト類は相互にPublic変数でGameObjectを参照している為、ここではまだ追加不可。 
     	 */
 		bool Stage_Add_Object(){
 			int OverCnt = 0;
@@ -228,10 +216,10 @@ namespace UnityChan{
 
 		/*!	originalと比較しTargetに不足しているスクリプト SpringCollider を追加する 
 		 * 	originalと比較しTargetに不足しているスクリプト SpringCollider を追加する 
-		 *	@return			true: エラーあり  false:エラーなし
+		 *	@param [out]		true: エラーあり  false:エラーなし
     	 * 	@note		
-    	 * 	@attention		SpringBone の参照先に SpringCollider がある為、
-    	 * 					SpringBone よりも SpringCollider を先に追加しなければならない。  
+    	 * 	@attention	SpringBone の参照先に SpringCollider がある為、
+    	 * 				SpringBone よりも SpringCollider を先に追加しなければならない。  
     	 */
 		bool Stage_Add_SpringCollider(){
 			SpringCollider[] cs_SpringCollider = go_Original.GetComponentsInChildrenWithoutSelf<SpringCollider>();
@@ -252,9 +240,9 @@ namespace UnityChan{
 
 		/*!	originalと比較しTargetに不足しているスクリプト SpringBone を追加する 
 		 * 	originalと比較しTargetに不足しているスクリプト SpringBone を追加する 
-		 *	@return			true: エラーあり  false:エラーなし
-    	 * 	@note			None
-    	 * 	@attention		SpringBone は 他のSpringCollider を参照する 、
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		
+    	 * 	@attention	SpringBone は 他のSpringCollider を参照する 、
     	 */
 		bool Stage_Add_SpringBone(){
 			SpringBone[] cs_original_SpringBone = go_Original.GetComponentsInChildrenWithoutSelf<SpringBone>();//!< OriginalのSpringBone一覧 
@@ -313,9 +301,9 @@ namespace UnityChan{
 
 		/*!	Target の SpringManager の変数類を originalからコピーする。  
 		 *	Target の SpringManager の変数類を originalからコピーする。	
-		 *	@return			true: エラーあり  false:エラーなし
-    	 * 	@note			None	
-    	 * 	@attention		None
+		 *	@param [out]		true: エラーあり  false:エラーなし
+    	 * 	@note		
+    	 * 	@attention	
     	 */
 		bool Stage_Add_SpringManager(){
 			SpringManager cs_original_SpringManager = go_Original.GetComponent<SpringManager>();
